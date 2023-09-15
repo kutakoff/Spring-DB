@@ -3,7 +3,6 @@ package org.example;
 import org.example.exceptions.ClientNotFoundException;
 import org.example.exceptions.TableIsEmptyException;
 import org.example.repository.ClientRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,10 +17,10 @@ public class ClientService {
         this.clientRepository = clientRepository;
     }
 
-    public ResponseEntity<Optional<Client>> findOneById(int id) throws ClientNotFoundException, TableIsEmptyException {
+    public Optional<Client> findOneById(int id) throws ClientNotFoundException, TableIsEmptyException {
         isTableEmpty();
         if (clientRepository.existsById(id)) {
-            return ResponseEntity.ok().body(clientRepository.findById(id));
+            return clientRepository.findById(id);
         } else {
             throw new ClientNotFoundException(); //обработка в классе ClientExceptionHandler
         }
